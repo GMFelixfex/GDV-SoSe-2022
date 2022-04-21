@@ -2,10 +2,10 @@ import cv2
 import numpy as np
 import glob
 
+
+
 # Function that adjust the Color mask
-
-
-def ChangeColor():
+def change_Color():
     lower_color = np.array([hue - hue_range, saturation -
                             saturation_range, value - value_range])
     upper_color = np.array([hue + hue_range, saturation +
@@ -35,7 +35,7 @@ def load_Image(imgNumber):
 # Class for Easy  Color Access
 
 
-class Farbe:
+class Color:
     def __init__(self, Name, Hue, Hue_range, Saturation, Saturation_Range, Value, Value_Range,  Shape, Roundness, Filter):
         self.Name = Name
         self.Hue = Hue
@@ -44,22 +44,22 @@ class Farbe:
         self.Saturation_Range = Saturation_Range
         self.Value = Value
         self.Value_Range = Value_Range
-        self.Filter = Filter
         self.Shape = Shape
         self.Roundness = Roundness
+        self.Filter = Filter
 
 
 # Array for all Usefull Colors
-farbenArray = [
-    Farbe('Blue', 100, 10, 160, 100, 255, 100, 2, 0.5, ['erosion']),
-    Farbe('Yellow', 27, 10, 155, 100, 255, 100, 0, 0.2, ['erosion', 'erosion', 'erosion', 'dilation']),
-    Farbe('Red', 180, 10, 255, 94, 228, 101, 2, 0.5, ['dilation', 'closing']),
-    Farbe('Pink', 0, 10, 47, 100, 255, 40, 2, 0.5, ['erosion', 'dilation', 'closing', 'erosion']),
-    Farbe('White', 27, 10, 47, 100, 255, 20, 2, 0.5, ['opening']),
-    Farbe('Green', 43, 10, 147, 100, 147, 100, 2, 0.5, ['erosion']),
-    Farbe('Red-Alt', 165, 10, 205, 100, 155, 100, 2, 0.5, ['']),
-    Farbe('Pink-Alt', 170, 10, 30, 40, 255, 40, 2, 0.5, ['']),
-    Farbe(
+colorArray = [
+    Color('Blue', 100, 10, 160, 100, 255, 100, 2, 0.5, ['erosion']),
+    Color('Yellow', 27, 10, 155, 100, 255, 100, 0, 0.2, ['erosion', 'erosion', 'erosion', 'dilation']),
+    Color('Red', 180, 10, 255, 94, 228, 101, 2, 0.5, ['dilation', 'closing']),
+    Color('Pink', 0, 10, 47, 100, 255, 40, 2, 0.5, ['erosion', 'dilation', 'closing', 'erosion']),
+    Color('White', 27, 10, 47, 100, 255, 20, 2, 0.5, ['opening']),
+    Color('Green', 43, 10, 147, 100, 147, 100, 2, 0.5, ['erosion']),
+    Color('Red-Alt', 165, 10, 205, 100, 155, 100, 2, 0.5, ['']),
+    Color('Pink-Alt', 170, 10, 30, 40, 255, 40, 2, 0.5, ['']),
+    Color(
         'White-alt', 0, 1, 0, 1, 255, 3, 0, 0.5,
         ['dilation', 'dilation', 'erosion', 'erosion', 'erosion', 'erosion', 'erosion', 'dilation', 'dilation',
          'dilation'])]
@@ -68,15 +68,15 @@ farbenArray = [
 # Get Starting Values
 collorNumber = 0
 
-hue = farbenArray[collorNumber].Hue
-hue_range = farbenArray[collorNumber].Hue_Range
-saturation = farbenArray[collorNumber].Saturation
-saturation_range = farbenArray[collorNumber].Saturation_Range
-value = farbenArray[collorNumber].Value
-value_range = farbenArray[collorNumber].Value_Range
-filterList = farbenArray[collorNumber].Filter
-shape = farbenArray[collorNumber].Shape
-expected_roundness = farbenArray[collorNumber].Roundness
+hue = colorArray[collorNumber].Hue
+hue_range = colorArray[collorNumber].Hue_Range
+saturation = colorArray[collorNumber].Saturation
+saturation_range = colorArray[collorNumber].Saturation_Range
+value = colorArray[collorNumber].Value
+value_range = colorArray[collorNumber].Value_Range
+filterList = colorArray[collorNumber].Filter
+shape = colorArray[collorNumber].Shape
+expected_roundness = colorArray[collorNumber].Roundness
 
 
 # Get all Images
@@ -87,7 +87,7 @@ imgNumber = 1
 (img, height, width, last_dim, imgNumber) = load_Image(imgNumber)
 
 # create the first mask
-mask = ChangeColor()
+mask = change_Color()
 
 
 def morph_shape(val):
@@ -102,30 +102,30 @@ def morph_shape(val):
 kernel_size = 3
 kernel_shape = morph_shape(shape)
 
+
+
 # dilation with parameters
-
-
 def dilation(img, size, shape):
     element = cv2.getStructuringElement(shape, (2 * size + 1, 2 * size + 1), (size, size))
     return cv2.dilate(img, element)
 
+
+
 # erosion with parameters
-
-
 def erosion(img, size, shape):
     element = cv2.getStructuringElement(shape, (2 * size + 1, 2 * size + 1), (size, size))
     return cv2.erode(img, element)
 
+
+
 # opening with parameters
-
-
 def opening(img, size, shape):
     element = cv2.getStructuringElement(shape, (2 * size + 1, 2 * size + 1), (size, size))
     return cv2.morphologyEx(img, cv2.MORPH_OPEN, element)
 
+
+
 # closing with parameters
-
-
 def closing(img, size, shape):
     element = cv2.getStructuringElement(shape, (2 * size + 1, 2 * size + 1), (size, size))
     return cv2.morphologyEx(img, cv2.MORPH_CLOSE, element)
@@ -194,7 +194,7 @@ while True:
 
     # test for the Found Gum-Balls
     if found:
-        print('We have found ' + str(numLabels-numRejected) + ' '+farbenArray[collorNumber].Name + ' balls.')
+        print('We have found ' + str(numLabels-numRejected) + ' ' + colorArray[collorNumber].Name + ' balls.')
         found = False
 
     # Displays the Image
@@ -210,34 +210,34 @@ while True:
     if key == ord('t'):
         imgNumber = imgNumber+1
         (img, height, width, last_dim, imgNumber) = load_Image(imgNumber)
-        mask = ChangeColor()
+        mask = change_Color()
         found = True
 
     # Sets the prevoius Image
     if key == ord('g'):
         imgNumber = imgNumber-1
         (img, height, width, last_dim, imgNumber) = load_Image(imgNumber)
-        mask = ChangeColor()
+        mask = change_Color()
         found = True
 
     # Changes The Color
     if key == ord('e'):
         collorNumber = collorNumber+1
-        if(collorNumber > len(farbenArray)-1):
+        if(collorNumber > len(colorArray)-1):
             collorNumber = 0
         found = True
 
-        hue = farbenArray[collorNumber].Hue
-        hue_range = farbenArray[collorNumber].Hue_Range
-        saturation = farbenArray[collorNumber].Saturation
-        saturation_range = farbenArray[collorNumber].Saturation_Range
-        value = farbenArray[collorNumber].Value
-        value_range = farbenArray[collorNumber].Value_Range
-        filterList = farbenArray[collorNumber].Filter
-        shape = farbenArray[collorNumber].Shape
-        expected_roundness = farbenArray[collorNumber].Roundness
+        hue = colorArray[collorNumber].Hue
+        hue_range = colorArray[collorNumber].Hue_Range
+        saturation = colorArray[collorNumber].Saturation
+        saturation_range = colorArray[collorNumber].Saturation_Range
+        value = colorArray[collorNumber].Value
+        value_range = colorArray[collorNumber].Value_Range
+        filterList = colorArray[collorNumber].Filter
+        shape = colorArray[collorNumber].Shape
+        expected_roundness = colorArray[collorNumber].Roundness
 
-        mask = ChangeColor()
+        mask = change_Color()
 
     # Outputs all Stats
     if key == ord('n'):
@@ -247,6 +247,8 @@ while True:
         print('Saturation-Range : '+str(saturation_range))
         print('Value: '+str(value))
         print('Value-Range : '+str(value_range))
+        print('Shape : '+str(Shape))
+        print('Roundness : '+str(expected_roundness))
         print('Filter: '+str(filterList))
 
 # Kills the Application
