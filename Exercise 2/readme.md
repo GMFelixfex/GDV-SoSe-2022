@@ -11,7 +11,7 @@ This exercise is for the course "Grafische Datenverarbeitung" in the summer term
 
 Project is Pep8-Formatted with the exeption of the Max-Line-Length.
 ## Purpose
-The  Application shows the usage of  **Morphologiccal Operations** via a and Color Detection agorythm.
+The  Application shows the usage of  **Morphologiccal Operations** via a Color Detection agorythm.
 
 It should detect the **Amount and Position of all** the colored gumballs in the images from the image folder. It can determine the amount of Blue, Yellow, Green, (Red, Pink and White)x2 gumballs  depending on the lighting conditions.
 
