@@ -1,4 +1,3 @@
-from cv2 import Laplacian
 import numpy as np
 import cv2
 
@@ -102,10 +101,13 @@ def hybrid_with_adjusted_functions_and_brightness(img_1,img_2,kernelSize,_sigma)
 
 
 # Load image and resize for better display
-img1 = cv2.imread('images\\dog.bmp', cv2.IMREAD_COLOR)
+img1 = cv2.imread('Exercise 3\\images\\karton1.jpg', cv2.IMREAD_COLOR)
 rows, cols , dims= img1.shape
+rows = 600
+cols = 400
+img1 = cv2.resize(img1, (cols, rows), interpolation=cv2.INTER_CUBIC) 
 
-img2 = cv2.imread('images\\cat.bmp', cv2.IMREAD_COLOR)
+img2 = cv2.imread('Exercise 3\\images\\karton2.jpg', cv2.IMREAD_COLOR)
 img2 = cv2.resize(img2, (cols, rows), interpolation=cv2.INTER_CUBIC) 
 
 # Varibale to select the type of laplacian and gaussian calculation
@@ -191,7 +193,7 @@ while True:
     cv2.imshow("Gaus",gausImg)
     cv2.imshow("Laplacian",lapImg)
     cv2.imshow("Hybrid",hydridImg)
-
+    cv2.imshow("Hybrid Small",cv2.resize(hydridImg, (cols//2, rows//2), interpolation=cv2.INTER_CUBIC))
 
     key = cv2.waitKey(1) & 0xFF
 
