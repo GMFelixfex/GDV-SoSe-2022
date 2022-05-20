@@ -199,6 +199,7 @@ while True:
 
     # if the 'r' key is pressed, reset the transformation
     if key == ord("r"):
+        img2_transform = img2.copy()
         ref_pt_src = []
         ref_pt_dst = []
         computationDone = False
