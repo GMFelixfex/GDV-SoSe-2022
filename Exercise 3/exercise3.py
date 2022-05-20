@@ -52,6 +52,8 @@ def hybrid_with_kernel_solution(img_1, img_2, kernelSize, _sigma):
 
     img_1 = convolution_with_opencv(img_1,kernel1)
     img_2 = convolution_with_opencv(img_2,kernel3)
+
+    #Adding Together
     img_3 = cv2.add(img_1,img_2)
 
     return img_1, img_2, img_3
@@ -69,6 +71,8 @@ def hybrid_with_premade_kernel(img_1, img_2, kernelSize, _sigma):
 
     img_1 = convolution_with_opencv(img_1,kernel1)
     img_2 = convolution_with_opencv(img_2,kernel3)
+
+    #Adding Together
     img_3 = cv2.add(img_1,img_2)
 
     return img_1, img_2, img_3
@@ -78,24 +82,28 @@ def  hybrid_with_premade_functions(img_1,img_2,kernelSize,_sigma):
     img_1 = cv2.GaussianBlur(img_1, (kernelSize,kernelSize), _sigma)
     kernelSize = 3
     img_2 = cv2.Laplacian(img_2,-1,ksize=kernelSize,)
+
+    #Adding Together
     img_3 = cv2.add(img_1,img_2)
 
     return img_1, img_2, img_3
 
-# Caculation based of GaussianBlur() with Unit Impuls
+# Caculation based of cv2.GaussianBlur() with Unit Impuls
 def hybrid_with_adjusted_functions(img_1,img_2,kernelSize,_sigma):
     img_1 = cv2.GaussianBlur(img_1, (kernelSize,kernelSize), _sigma)
     img_2 = cv2.subtract(cv2.GaussianBlur(img_2, (kernelSize,kernelSize), _sigma), cv2.GaussianBlur(img_2, (kernelSize,kernelSize),1, 0.9))
     
+    #Adding Together
     img_3 = cv2.add(img_1,img_2)
     return img_1, img_2, img_3
 
 
-# Caculation based of GaussianBlur() with Unit Impuls, adjusted to a higher brightness 
+# Caculation based of cv2.GaussianBlur() with Unit Impuls, adjusted to a higher brightness 
 def hybrid_with_adjusted_functions_and_brightness(img_1,img_2,kernelSize,_sigma):
     img_1 = cv2.GaussianBlur(img_1, (kernelSize,kernelSize), _sigma)
     img_2 = cv2.subtract(cv2.GaussianBlur(img_2, (kernelSize,kernelSize), _sigma), cv2.GaussianBlur(img_2, (kernelSize,kernelSize),1, 0.9))-127
     
+    #Adding Together
     img_3 = cv2.add(img_1//2,img_2//2)
     return img_1, img_2, img_3
 
