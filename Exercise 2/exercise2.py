@@ -247,7 +247,7 @@ while True:
         print('Saturation-Range : '+str(saturation_range))
         print('Value: '+str(value))
         print('Value-Range : '+str(value_range))
-        print('Shape : '+str(Shape))
+        print('Shape : '+str(shape))
         print('Roundness : '+str(expected_roundness))
         print('Filter: '+str(filterList))
 
