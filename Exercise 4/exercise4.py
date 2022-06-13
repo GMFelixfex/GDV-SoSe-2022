@@ -32,14 +32,14 @@ def click(event, x, y, flags, param):
 
 
 # Setting up the Training Data
-file_name = '.Exercise 4/data/data'
-root_path = '.Exercise 4/data/101_ObjectCategories/'
+file_name = 'Exercise 4/data/data'
+root_path = 'Exercise 4/data/101_ObjectCategories/'
 
 trainData = TrainingSet(root_path)
 
 # Loading the Image for the Selction Prozess
 imgForMosaic =  cv2.imread('Exercise 4/bilder/cat2.png', cv2.IMREAD_COLOR)
-imgForMosaic =  cv2.resize(imgForMosaic,(800,800))
+imgForMosaic =  cv2.resize(imgForMosaic,(1024,1024))
 
 # Displaying the Original Iamge for the key input
 cv2.namedWindow("Original Image",cv2.WINDOW_AUTOSIZE)
@@ -100,10 +100,10 @@ if not endApp:
         trainData.saveTrainingData(file_name)
 
 
-    # Dividing the Image in 2500 tiles
+    # Dividing the Image in 4096 tiles
     imgArray = []
-    for i in range(50):
-        for k in range(50):
+    for i in range(64):
+        for k in range(64):
             imgArray.append(imgForMosaic[i*16:i*16+16,k*16:k*16+16])
 
     bestMatchedImages = []
@@ -127,7 +127,7 @@ if not endApp:
         # Resizing and addihng the picture to 2 lists
         bestMatchedImages.append(cv2.resize(matchedImage,(16,16)))
         bestMatchedImagesPart.append(matchedImage)
-        if(i%50 == 0 and i > 0):
+        if(i%64 == 0 and i > 0):
             # Creating a 2d List
             bestMatchedImagesFull.append(bestMatchedImagesPart)
             bestMatchedImagesPart = []
@@ -139,17 +139,18 @@ if not endApp:
             endApp = True
             break
             
-        print("Picture Tile: "+str(i))
+        print("Picture Tile: "+str(i+1)+" / 4096")
 
     bestMatchedImagesFull.append(bestMatchedImagesPart)
+
 
 if not endApp:
     newCompletedImage = imgForMosaic.copy()
     j = 0
 
     # Replacing the Tiles with the Pictures
-    for i in range(50):
-        for k in range(50):
+    for i in range(64):
+        for k in range(64):
             newCompletedImage[i*16:i*16+16,k*16:k*16+16] = bestMatchedImages[j]
             j = j+1
 
@@ -160,6 +161,7 @@ if not endApp:
     cv2.imshow("Finished Image",newCompletedImage)
     cv2.setMouseCallback('Finished Image', click)
 
+    print("To Save the Mosaik, press 'T'")
 
     # Loop for Image selection
     while True:
@@ -172,9 +174,10 @@ if not endApp:
         # Save Function
         if (key == ord("t")):
             cv2.imwrite("Exercise 4/bilder/Mosaik.png",newCompletedImage)
+            print("Saved Mosaik")
 
         # Displaying the Clicked Image
-        if(click_x <= 49 and click_y <= 49):
+        if(click_x <= 63 and click_y <= 63):
             cv2.imshow("Tile Image",bestMatchedImagesFull[click_y][click_x-1])
 
 cv2.destroyAllWindows()
