@@ -5,7 +5,7 @@
 ## About The Project   
   
 
-This exercise is for the course "Grafische Datenverarbeitung" in the summer term 2022 at HS Furtwangen University.  The whole project is written in Python via VS-Code   
+This exercise is for the course "Grafische Datenverarbeitung" in the summer term of 2022 at HS Furtwangen University.  The whole project is written in Python via VS-Code   
     
   
 
@@ -27,20 +27,20 @@ This exercise is for the course "Grafische Datenverarbeitung" in the summer term
   
 
 The Application shows the usage of Image-Matching to create a Picture-Mosaik
-The Picture-Mosaik has a size of 50x50 pictures (2500 pictures)
-It uses Trainingdata from ~9000 pictures and a FlannBasedMatcher to match tiles of the big image
+The Picture-Mosaic has a size of 64x64 tiles (4096 pictures)
+It uses Training data from ~9000 pictures and a FlannBasedMatcher to match tiles of the big image
   
 
 ## How to use   
   
 
-1. The application  can be started by opening the exercise4.py with VS-Code or the Python-launcher.   
-2. In the Console you will be promted to Select the Training Descriptor with **"W"** or **"S"**, you can confirm the descriptor with **"D"**
-3. Next you will be promted to either press **"R"** to load the Trainingdata or any other key to train the data
-4. You will now need to wait for the Program to finish generating the Mosaik (2500 PIctures, ~ 2-4min)
+1. The application can be started by opening the exercise4.py with VS-Code or the Python-launcher.   
+2. In the Console you will be prompted to select the Training Descriptor with **"W"** or **"S"**, you can confirm the descriptor with **"D"**
+3. Next you will be prompted to either press **"R"** to load the Trainingdata or any other key to train the data
+4. You will now need to wait for the Program to finish generating the Mosaik (4096 PIctures, ~ 2-4min)
 5. To end the application press **"Q"**.   
 6. To save the Mosaik press **"T"**.   
-7. To select a tile, just left-click it with the mouse-cursor, it will then be displayed in the  "Tile-Image" window
+7. To select a tile, just left-click it with the mouse cursor, it will then be displayed in the  "Tile-Image" window
     
   
   
@@ -48,13 +48,13 @@ It uses Trainingdata from ~9000 pictures and a FlannBasedMatcher to match tiles 
 ## How does it work?   
     
 
-In general our project works like this:  
+In general, our project works like this:  
   
 Step 1:  We open up a cv2 window and import the Image to use waitkey() for the selections and loading Process. The Image gets resized to 800x800
 
-Step 2: We create an array of all discriptors and use a simple selection system to display the selected     		   		 discriptor
+Step 2: We create an array of all descriptors and use a simple selection system to display the selected     		   		 descriptor
 
-Step 3:  We check if there is already a dataset for the selected descriptor with os.path.isfile() , if not it will automatically start training 
+Step 3:  We check if there is already a dataset for the selected descriptor with os.path.isfile(), if not it will automatically start training 
 
  ```python
  if  os.path.isfile(file_name):
@@ -72,9 +72,9 @@ else:
 
 ```
 
-Step 4: We split the Image in 2500 tiles (16x16 size)
+Step 4: We split the Image into 4096 tiles (16x16 size)
 
-Step 5: We match a picture to every tile via the trainingdata
+Step 5: We match a picture to every tile via the training data
 
  ```python
 def  findBestMatch(trainData, sample):
@@ -116,7 +116,7 @@ Step 6:  We add the resulting picture to a 1d- and  2d-array. The 1d array store
 bestMatchedImagesFull.append(bestMatchedImagesPart)
 ```
 
-Step 7: We reform an Image with the new 16x16 pictures, to create and then display the mosaik
+Step 7: We reform an Image with the new 16x16 pictures, to create and then display the mosaic
 
  ```python
 for  i  in  range(50):
@@ -129,7 +129,7 @@ cv2.namedWindow("Tile Image",cv2.WINDOW_GUI_NORMAL)
 cv2.imshow("Finished Image",newCompletedImage)
 ```
 
-Step  8: We set a mouse-callback for  interacting with the mosaik.  Wehn using left Click you can select an image to display inb the "Tile Image" window
+Step  8: We set a mouse callback for interacting with the mosaic. When using the left click you can select an image to display in the "Tile Image" window
 
  ```python
 def  click(event, x, y, flags, param):
@@ -143,7 +143,7 @@ def  click(event, x, y, flags, param):
 cv2.setMouseCallback('Finished Image', click)
 ```
 
-Step 9: We create a loop to display the selected tile and saving the mosaik
+Step 9: We create a loop to display the selected tile and save the mosaic
 
  ```python
 while True:
