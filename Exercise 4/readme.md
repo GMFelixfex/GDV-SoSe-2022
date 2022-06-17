@@ -26,7 +26,7 @@ This exercise is for the course "Grafische Datenverarbeitung" in the summer term
 ## Purpose   
   
 
-The Application shows the usage of Image-Matching to create a Picture-Mosaik
+The Application shows the usage of Image-Matching to create a Picture-Mosaic
 The Picture-Mosaic has a size of 64x64 tiles (4096 pictures)
 It uses Training data from ~9000 pictures and a FlannBasedMatcher to match tiles of the big image
   
